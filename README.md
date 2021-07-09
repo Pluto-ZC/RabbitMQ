@@ -66,5 +66,10 @@ Return Listener 用于处理一-些不可路 由的消息!
     但是在某些情况下，如果我们在发送消息的时候，当前的 exchange 不存在或者指定的路由 key 路由不到，这个时候如果我们需要监听这种不可达的消息，就要使用 Return Listener !
     在基础API中有一个关键的配置项:Mandatory：如果为 true，则监听器会接收到路由不可达的消息，然后进行后续处理，如果为 false，那么 broker 端自动删除该消息!
 
+消费端 Ack 和 Nack 机制#
+    消费端进行消费的时候，如果由于业务异常我们可以进行日志的记录，然后进行补偿!如果由于服务器宕机等严重问题，那我们就需要手工进行ACK保障消费端消费成功!消费端重回队列是为了对没有处理成功的消息，把消息重新会递给Broker!一般我们在实际应用中，都会关闭重回队列，也就是设置为False。
 
+参考 api#
+    void basicNack(long deliveryTag, boolean multiple, boolean requeue) throws IOException;
+    void basicAck(long deliveryTag, boolean multiple) throws IOException;
 
